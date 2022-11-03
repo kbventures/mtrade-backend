@@ -3,6 +3,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const auth = require("./auth");
 
 // require database connection
 const dbConnect = require("./db/dbConnect");
@@ -112,6 +113,16 @@ app.post("/login", (request, response) => {
         e,
       });
     });
+});
+
+// free endpoint
+app.get("/free-endpoint", (request, response) => {
+  response.json({ message: "You are free to access me anytime" });
+});
+
+// authentication endpoint
+app.get("/auth-endpoint", auth, (request, response) => {
+  response.json({ message: "You are authorized to access me" });
 });
 
 module.exports = app;
