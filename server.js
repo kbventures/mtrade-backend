@@ -1,5 +1,6 @@
 require("dotenv").config();
 
+const bodyParser = require("body-parser");
 const express = require("express");
 const mongoose = require("mongoose");
 const tradesRoutes = require("./routes/trades");
@@ -8,6 +9,11 @@ const tradesRoutes = require("./routes/trades");
 const app = express();
 
 // Middleware
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
 app.use(express.json());
 app.use((req, res, next) => {
   console.log(req.path, req.method);

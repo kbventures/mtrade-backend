@@ -26,6 +26,34 @@ const getTrade = async (req, res) => {
 
 const createTrade = async (req, res) => {
   const { pair, price, amount, closedPrice, openedDate, closedDate } = req.body;
+
+  let emptyFields = [];
+  if (!pair) {
+    emptyFields.push("pair");
+  }
+  if (!price) {
+    emptyFields.push("price");
+  }
+  if (!amount) {
+    emptyFields.push("amount");
+  }
+  if (!closedPrice) {
+    emptyFields.push("closedPrice");
+  }
+  if (!openedDate) {
+    emptyFields.push("openedDate");
+  }
+  if (!closedDate) {
+    emptyFields.push("closedDate");
+  }
+
+  if (emptyFields.length > 0) {
+    return res
+      .status(400)
+      .json({ error: "Please fill in all the fields", emptyFields });
+  }
+
+  // add trade to db
   try {
     const trade = await Trade.create({
       pair,
