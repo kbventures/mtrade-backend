@@ -1,11 +1,19 @@
 {
   "name": "suntzutrade-backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Node.js + MongoDB: JWT Authentication & Authorization",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js"
   },
+  "keywords": [
+    "node.js",
+    "express",
+    "jwt",
+    "authentication",
+    "mongodb"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kbventures/sunTzuTrade-backend.git"
@@ -20,11 +28,12 @@
     "nodemon": "^2.0.20"
   },
   "dependencies": {
-    "bcrypt": "^5.1.0",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.1",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.7.0"
+    "mongoose": "^6.7.2"
   }
 }
