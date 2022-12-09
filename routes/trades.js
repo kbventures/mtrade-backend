@@ -7,8 +7,12 @@ const {
   deleteTrade,
   updateTrade,
 } = require("../controllers/tradeController");
+const requireAuth = require("../middleware/requireAuth");
 
 const router = express.Router();
+
+// require auth for all workout routes
+router.use(requireAuth);
 
 // GET all trades
 router.get("/", getTrades);
