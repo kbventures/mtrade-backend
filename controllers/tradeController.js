@@ -58,6 +58,7 @@ const createTrade = async (req, res) => {
   try {
     const user_id = req.user._id;
     const trade = await Trade.create({
+      user_id,
       pair,
       price,
       amount,
