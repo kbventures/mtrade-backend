@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 
 // get all trades
 const getTrades = async (req, res) => {
-  const trades = await Trade.find({}).sort({ createdAt: -1 });
+  const user_id = req.user._id;
+  const trades = await Trade.find({ user_id }).sort({ createdAt: -1 });
   res.status(200).json(trades);
 };
 
@@ -55,6 +56,7 @@ const createTrade = async (req, res) => {
 
   // add trade to db
   try {
+    const user_id = req.user._id;
     const trade = await Trade.create({
       pair,
       price,
