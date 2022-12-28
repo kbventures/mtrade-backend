@@ -1,13 +1,7 @@
-const express = require("express");
+const express = require('express');
 
-const {
-  createTrade,
-  getTrades,
-  getTrade,
-  deleteTrade,
-  updateTrade,
-} = require("../controllers/tradeController");
-const requireAuth = require("../middleware/requireAuth");
+const { createTrade, getTrades, getTrade, deleteTrade, updateTrade } = require('../controllers/tradeController');
+const requireAuth = require('../middleware/requireAuth');
 
 const router = express.Router();
 
@@ -15,18 +9,18 @@ const router = express.Router();
 router.use(requireAuth);
 
 // GET all trades
-router.get("/", getTrades);
+router.get('/', getTrades);
 
 // GET a single trade
-router.get("/:id", getTrade);
+router.get('/:id', getTrade);
 
 // POST a new trade
-router.post("/", createTrade);
+router.post('/', createTrade);
 
 // DELETE a trade
-router.delete("/:id", deleteTrade);
+router.delete('/:id', deleteTrade);
 
 // UPDATE a trade
-router.patch("/:id", updateTrade);
+router.patch('/:id', updateTrade);
 
 module.exports = router;
