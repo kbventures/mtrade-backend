@@ -27,7 +27,7 @@ const tradeSchema = new Schema(
                 closedDate: {
                         type: Date,
                 },
-                user_id: {
+                userId: {
                         type: String,
                         required: true,
                 },
