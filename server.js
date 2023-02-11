@@ -28,9 +28,9 @@ app.use('/api/trades', tradesRoutes);
 app.use('/api/user', userRoutes);
 
 // Back end is working browser message
-// app.get('/api', (req, res) => {
-//         res.send('Hello World!');
-// });
+app.get('/api', (req, res) => {
+        res.send('Hello World!');
+});
 
 // connect to db
 mongoose.connect(process.env.MONGO_URI)
