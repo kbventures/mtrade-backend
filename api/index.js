@@ -28,7 +28,7 @@ app.use('/api/trades', tradesRoutes);
 app.use('/api/user', userRoutes);
 
 // Back end is working browser message
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
         res.send('Hello World!');
 });
 
