@@ -4,8 +4,8 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const express = require('express');
 const mongoose = require('mongoose');
-const tradesRoutes = require('../routes/trades');
-const userRoutes = require('../routes/user');
+const tradesRoutes = require('../routes/user');
+const userRoutes = require('../routes/trades');
 // express app
 const app = express();
 
@@ -28,7 +28,7 @@ app.use('/api/trades', tradesRoutes);
 app.use('/api/user', userRoutes);
 
 // Back end is working browser message
-app.get('/api', (req, res) => {
+app.get('/', (req, res) => {
         res.send('Hello World!');
 });
 
