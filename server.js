@@ -27,6 +27,11 @@ app.use((req, res, next) => {
 app.use('/api/trades', tradesRoutes);
 app.use('/api/user', userRoutes);
 
+// Back end is working browser message
+app.get('/', (req, res) => {
+        res.send('Hello World!');
+});
+
 // connect to db
 mongoose.connect(process.env.MONGO_URI)
         .then(() => {
@@ -40,3 +45,5 @@ mongoose.connect(process.env.MONGO_URI)
                 /* eslint no-console: ["error", { allow: ["warn", "error"] }] */
                 console.error(error);
         });
+
+module.exports = app;
