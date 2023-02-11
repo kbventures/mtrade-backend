@@ -36,7 +36,7 @@ app.get('/', (req, res) => {
 mongoose.connect(process.env.MONGO_URI)
         .then(() => {
                 // listen for requests
-                app.listen(process.env.PORT, () => {
+                app.listen(process.env.PORT || 4000, () => {
                         // eslint-disable-next-line no-console
                         console.log('Connected to db & listening on port', process.env.PORT || 4000);
                 });
