@@ -45,3 +45,5 @@ mongoose.connect(process.env.MONGO_URI)
                 /* eslint no-console: ["error", { allow: ["warn", "error"] }] */
                 console.error(error);
         });
+
+module.exports = app;
