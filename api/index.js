@@ -4,8 +4,8 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const express = require('express');
 const mongoose = require('mongoose');
-const tradesRoutes = require('../routes/user');
-const userRoutes = require('../routes/trades');
+const tradesRoutes = require('../routes/trades');
+const userRoutes = require('../routes/user');
 // express app
 const app = express();
 
