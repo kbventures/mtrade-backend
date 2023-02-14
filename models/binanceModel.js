@@ -2,14 +2,14 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
-const tradeSchema = new Schema(
+const apiSchema = new Schema(
         {
                 apiKey: {
                         type: String,
                         required: true,
                 },
                 secretKey: {
-                        type: Number,
+                        type: String,
                         required: true,
                 },
                 userId: {
@@ -20,4 +20,4 @@ const tradeSchema = new Schema(
         { timestamps: true }
 );
 
-module.exports = mongoose.model('Api', tradeSchema);
+module.exports = mongoose.model('Api', apiSchema);
