@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
-const tradeSchema = new Schema(
+const historySchema = new Schema(
         {
                 symbol: {
                         type: String,
@@ -64,4 +64,4 @@ const tradeSchema = new Schema(
         { timestamps: true }
 );
 
-module.exports = mongoose.model('Trade', tradeSchema);
+module.exports = mongoose.model('History', historySchema);
