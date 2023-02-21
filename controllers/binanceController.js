@@ -3,7 +3,7 @@ const Api = require('../models/userKeyModel');
 const History = require('../models/binanceSpotModel');
 
 // add Binance api
-const addApi = async (req, res) => {
+const addSecretKey = async (req, res) => {
         const { apiKey, secretKey } = req.body;
 
         // Check for empty fields
@@ -41,7 +41,7 @@ const addApi = async (req, res) => {
 };
 
 // Get all Binance trade history from saved on MongoDB for current authenticated user
-const getSavedHistory = async (req, res) => {
+const getTrades = async (req, res) => {
         try {
                 const userId = req.user._id;
                 const tradeHistory = await History.find({ userId }).sort({ createdAt: -1 });
@@ -49,7 +49,6 @@ const getSavedHistory = async (req, res) => {
                 if (!tradeHistory) {
                         return res.status(404).json({ error: 'No Trade History' });
                 }
-                res.status(200).json(tradeHistory);
 
                 res.status(200).json({ status: 'success' });
         } catch (error) {
@@ -58,6 +57,82 @@ const getSavedHistory = async (req, res) => {
 };
 
 const updateTrades = async (req, res) => {
+        const userId = req.user._id;
+
+        // call binance api to obtain history
+        try {
+                const apiInfo = await Api.find({ userId });
+
+                if (apiInfo.length < 1) {
+                        return res.status(404).json({ error: 'This user has no Binance API Registered' });
+                }
+
+                const binance = new Binance().options({
+                        APIKEY: apiInfo[0].apiKey,
+                        APISECRET: apiInfo[0].secretKey,
+                });
+
+                await binance.trades('BTCBUSD', (error, trades) => {
+                        // Loop through the trades array provided by binance api
+                        let count = 0;
+                        trades.forEach(async (tradesBinance) => {
+                                // Deconstructg all the key value
+                                const {
+                                        symbol,
+                                        id,
+                                        orderId,
+                                        orderListId,
+                                        price,
+                                        qty,
+                                        quoteQty,
+                                        commission,
+                                        commissionAsset,
+                                        time,
+                                        isBuyer,
+                                        isMaker,
+                                        isBestMatch,
+                                } = tradesBinance;
+
+                                const tradeExist = await History.exists({ tradeId: id });
+
+                                // If entry id exist continue
+                                if (tradeExist) {
+                                        return;
+                                }
+
+                                // Keep count of new trades added
+                                count += 1;
+
+                                // Naming conflict
+                                const tradeId = id;
+
+                                await History.create({
+                                        symbol,
+                                        tradeId,
+                                        orderId,
+                                        orderListId,
+                                        price,
+                                        qty,
+                                        quoteQty,
+                                        commission,
+                                        commissionAsset,
+                                        time,
+                                        isBuyer,
+                                        isMaker,
+                                        isBestMatch,
+                                        userId,
+                                });
+                        });
+
+                        res.status(200).json({ status: 'success', newTrades: `new trades added ${count}` });
+                });
+        } catch (error) {
+                res.status(400).json({ error: error.message });
+        }
+};
+
+// Get post trade history from specific pair
+const updateSpecificPair = async (req, res) => {
         const userId = req.user._id;
 
         // call binance api to obtain history
@@ -166,8 +241,9 @@ const getTrade = async (req, res) => {
 };
 
 module.exports = {
-        addApi,
-        getSavedHistory,
+        addSecretKey,
+        getTrades,
         updateTrades,
+        updateSpecificPair,
         getTrade,
 };
