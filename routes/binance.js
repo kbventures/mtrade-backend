@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { addApi, getHistory, updateHistory } = require('../controllers/binanceController');
+const { addApi, getSavedHistory, updateTrades, getTrade } = require('../controllers/binanceController');
 const requireAuth = require('../middleware/requireAuth');
 
 const router = express.Router();
@@ -10,6 +10,7 @@ router.use(requireAuth);
 
 // GET all trades
 router.post('/', addApi);
-router.get('/', getHistory);
-router.get('/update', updateHistory);
+router.get('/', getSavedHistory);
+router.get('/updatetrades', updateTrades);
+router.get('/specifictrade', getTrade);
 module.exports = router;

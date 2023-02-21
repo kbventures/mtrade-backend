@@ -8,7 +8,7 @@ const historySchema = new Schema(
                         type: String,
                         required: true,
                 },
-                id: {
+                tradeId: {
                         type: Number,
                         required: true,
                 },
@@ -16,7 +16,7 @@ const historySchema = new Schema(
                         type: Number,
                         required: true,
                 },
-                orderIdList: {
+                orderListId: {
                         type: Number,
                         required: true,
                 },

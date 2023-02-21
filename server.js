@@ -27,6 +27,7 @@ app.use((req, res, next) => {
 // routes
 app.use('/api/trades', tradesRoutes);
 app.use('/api/user', userRoutes);
+// Entry point will need to be refactored to eneable other exchanges in the future.
 app.use('/api/binance', binanceRoutes);
 
 // connect to db

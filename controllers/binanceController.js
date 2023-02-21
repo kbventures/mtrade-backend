@@ -1,8 +1,8 @@
 const Binance = require('../node_modules/node-binance-api');
-const Api = require('../models/binanceModel');
+const Api = require('../models/userKeyModel');
 const History = require('../models/binanceSpotModel');
 
-// add binance api
+// add Binance api
 const addApi = async (req, res) => {
         const { apiKey, secretKey } = req.body;
 
@@ -40,11 +40,16 @@ const addApi = async (req, res) => {
         }
 };
 
-const getHistory = async (req, res) => {
-        // call binance api to obtain history
+// Get all Binance trade history from saved on MongoDB for current authenticated user
+const getSavedHistory = async (req, res) => {
         try {
                 const userId = req.user._id;
-                const tradeHistory = await History.find({ userId });
+                const tradeHistory = await History.find({ userId }).sort({ createdAt: -1 });
+
+                if (!tradeHistory) {
+                        return res.status(404).json({ error: 'No Trade History' });
+                }
+                res.status(200).json(tradeHistory);
 
                 res.status(200).json({ status: 'success' });
         } catch (error) {
@@ -52,7 +57,83 @@ const getHistory = async (req, res) => {
         }
 };
 
-const updateHistory = async (req, res) => {
+const updateTrades = async (req, res) => {
+        const userId = req.user._id;
+
+        // call binance api to obtain history
+        try {
+                const apiInfo = await Api.find({ userId });
+
+                if (apiInfo.length < 1) {
+                        return res.status(404).json({ error: 'This user has no Binance API Registered' });
+                }
+
+                const binance = new Binance().options({
+                        APIKEY: apiInfo[0].apiKey,
+                        APISECRET: apiInfo[0].secretKey,
+                });
+
+                await binance.trades('BTCBUSD', (error, trades) => {
+                        // Loop through the trades array provided by binance api
+                        let count = 0;
+                        trades.forEach(async (tradesBinance) => {
+                                // Deconstructg all the key value
+                                const {
+                                        symbol,
+                                        id,
+                                        orderId,
+                                        orderListId,
+                                        price,
+                                        qty,
+                                        quoteQty,
+                                        commission,
+                                        commissionAsset,
+                                        time,
+                                        isBuyer,
+                                        isMaker,
+                                        isBestMatch,
+                                } = tradesBinance;
+
+                                const tradeExist = await History.exists({ tradeId: id });
+
+                                // If entry id exist continue
+                                if (tradeExist) {
+                                        return;
+                                }
+
+                                // Keep count of new trades added
+                                count += 1;
+
+                                // Naming conflict
+                                const tradeId = id;
+
+                                await History.create({
+                                        symbol,
+                                        tradeId,
+                                        orderId,
+                                        orderListId,
+                                        price,
+                                        qty,
+                                        quoteQty,
+                                        commission,
+                                        commissionAsset,
+                                        time,
+                                        isBuyer,
+                                        isMaker,
+                                        isBestMatch,
+                                        userId,
+                                });
+                        });
+
+                        res.status(200).json({ status: 'success', newTrades: `new trades added ${count}` });
+                });
+        } catch (error) {
+                res.status(400).json({ error: error.message });
+        }
+};
+
+// Not started yet
+const getTrade = async (req, res) => {
         // call binance api to obtain history
         try {
                 const userId = req.user._id;
@@ -67,14 +148,18 @@ const updateHistory = async (req, res) => {
                         APISECRET: apiInfo[0].secretKey,
                 });
 
-                binance.trades('BTCBUSD', (error, trades, symbol) => {
+                let result;
+
+                await binance.trades('BTCBUSD', (error, trades, symbol) => {
                         // eslint-disable-next-line no-console
-                        console.info(`${symbol} trade history`, trades);
+                        // console.info(`${symbol} trade history`, trades);
+                        // eslint-disable-next-line no-console
+                        console.info(trades);
                 });
                 // eslint-disable-next-line no-console
-                console.log(test);
+                console.log(result);
 
-                res.status(200).json({ status: 'success' });
+                res.status(200).json({ result });
         } catch (error) {
                 res.status(400).json({ error: error.message });
         }
@@ -82,6 +167,7 @@ const updateHistory = async (req, res) => {
 
 module.exports = {
         addApi,
-        getHistory,
-        updateHistory,
+        getSavedHistory,
+        updateTrades,
+        getTrade,
 };
