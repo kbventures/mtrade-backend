@@ -71,11 +71,18 @@ const updateTrades = async (req, res) => {
                         APIKEY: apiInfo[0].apiKey,
                         APISECRET: apiInfo[0].secretKey,
                 });
+                binance.trades('BTCBUSD', async (error, trades) => {
+                        // eslint-disable-next-line no-console
+                        console.log(error);
 
-                await binance.trades('BTCBUSD', (error, trades) => {
-                        // Loop through the trades array provided by binance api
+                        if (error !== null) {
+                                return res.status(400).json({ error: 'Invalid trade pair or missing pair' });
+                        }
+
                         let count = 0;
-                        trades.forEach(async (tradesBinance) => {
+
+                        // Loop through the trades array provided by binance api
+                        for (let i = 0; i < trades.length; i += 1) {
                                 // Deconstructg all the key value
                                 const {
                                         symbol,
@@ -91,39 +98,36 @@ const updateTrades = async (req, res) => {
                                         isBuyer,
                                         isMaker,
                                         isBestMatch,
-                                } = tradesBinance;
+                                } = trades[i];
 
                                 const tradeExist = await History.exists({ tradeId: id });
 
                                 // If entry id exist continue
-                                if (tradeExist) {
-                                        return;
+                                if (!tradeExist) {
+                                        // Naming conflict
+                                        const tradeId = id;
+
+                                        History.create({
+                                                symbol,
+                                                tradeId,
+                                                orderId,
+                                                orderListId,
+                                                price,
+                                                qty,
+                                                quoteQty,
+                                                commission,
+                                                commissionAsset,
+                                                time,
+                                                isBuyer,
+                                                isMaker,
+                                                isBestMatch,
+                                                userId,
+                                        });
+
+                                        // Keep count of new trades added
+                                        count += 1;
                                 }
-
-                                // Keep count of new trades added
-                                count += 1;
-
-                                // Naming conflict
-                                const tradeId = id;
-
-                                await History.create({
-                                        symbol,
-                                        tradeId,
-                                        orderId,
-                                        orderListId,
-                                        price,
-                                        qty,
-                                        quoteQty,
-                                        commission,
-                                        commissionAsset,
-                                        time,
-                                        isBuyer,
-                                        isMaker,
-                                        isBestMatch,
-                                        userId,
-                                });
-                        });
-
+                        }
                         res.status(200).json({ status: 'success', newTrades: `new trades added ${count}` });
                 });
         } catch (error) {
@@ -134,8 +138,9 @@ const updateTrades = async (req, res) => {
 // Get post trade history from specific pair
 const updateSpecificPair = async (req, res) => {
         const userId = req.user._id;
+        const { pair } = req.params;
 
-        // call binance api to obtain history
+        // call binance api to obtain history of specific pair
         try {
                 const apiInfo = await Api.find({ userId });
 
@@ -148,7 +153,7 @@ const updateSpecificPair = async (req, res) => {
                         APISECRET: apiInfo[0].secretKey,
                 });
 
-                await binance.trades('BTCBUSD', (error, trades) => {
+                await binance.trades(pair, (error, trades) => {
                         // Loop through the trades array provided by binance api
                         let count = 0;
                         trades.forEach(async (tradesBinance) => {
@@ -207,7 +212,7 @@ const updateSpecificPair = async (req, res) => {
         }
 };
 
-// Not started yet
+// Get specific trade associated with ID - Not started yet
 const getTrade = async (req, res) => {
         // call binance api to obtain history
         try {
