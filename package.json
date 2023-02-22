@@ -57,6 +57,7 @@
     "express": "^4.18.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.7.2",
+    "node-binance-api": "^0.13.1",
     "validator": "^13.7.0"
   }
 }
