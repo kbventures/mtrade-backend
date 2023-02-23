@@ -151,8 +151,6 @@ const updateSpecificPair = async (req, res) => {
                         APISECRET: apiInfo[0].secretKey,
                 });
                 binance.trades(pair, async (error, trades) => {
-                        console.log(error);
-
                         if (error !== null) {
                                 return res.status(400).json({ error: 'Invalid trade pair or missing pair' });
                         }
@@ -231,7 +229,7 @@ const getTrade = async (req, res) => {
 
                 let result;
 
-                await binance.trades('BTCBUSD', (error, trades, symbol) => {
+                await binance.trades('BTCBUSD', (error, trades) => {
                         // eslint-disable-next-line no-console
                         // console.info(`${symbol} trade history`, trades);
                         // eslint-disable-next-line no-console
