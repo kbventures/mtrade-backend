@@ -24,6 +24,7 @@ const getTrade = async (req, res) => {
 };
 
 // create a new trade
+// Testing
 
 const createTrade = async (req, res) => {
         const { pair, price, amount, closedPrice, openedDate, closedDate } = req.body;
