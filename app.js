@@ -33,7 +33,6 @@ app.use(
         })
 );
 
-console.log('test');
 app.use(express.json());
 app.use((req, res, next) => {
         // eslint-disable-next-line no-console
