@@ -10,17 +10,20 @@ const binanceRoutes = require('./routes/binance');
 // express app
 const app = express();
 
-// connect to db
-mongoose.set('strictQuery', false);
-mongoose.connect(process.env.MONGO_URI)
-        .then(() => {
-                // eslint-disable-next-line no-console
-                console.log('Connected to db');
-        })
-        .catch((error) => {
-                /* eslint no-console: ["error", { allow: ["warn", "error"] }] */
-                console.error(error);
-        });
+// Set up mongoose connection
+if (process.env.NODE_ENV !== 'test') {
+        // connect to db
+        mongoose.set('strictQuery', false);
+        mongoose.connect(process.env.MONGO_URI)
+                .then(() => {
+                        // eslint-disable-next-line no-console
+                        console.log('Connected to db');
+                })
+                .catch((error) => {
+                        /* eslint no-console: ["error", { allow: ["warn", "error"] }] */
+                        console.error(error);
+                });
+}
 
 // Middleware
 app.use(cors());
@@ -29,6 +32,8 @@ app.use(
                 extended: true,
         })
 );
+
+console.log('test');
 app.use(express.json());
 app.use((req, res, next) => {
         // eslint-disable-next-line no-console
