@@ -1,7 +1,7 @@
 <a name="readme-top"></a>
 
 <a href="">
-  <img src="https://therealsujitk-vercel-badge.vercel.app/?app=mtrade-backend" />
+  <img src="https://therealsujitk-vercel-badge.vercel.app/?app=mtrade-frontend" />
 </a>
 
 <!-- PROJECT LOGO -->
