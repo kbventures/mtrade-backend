@@ -12,18 +12,18 @@
   </a>
   
   <div align="center">
-<a href="https://github.com/kbventures/mtrade-frontend/network/members">
-  <img height="28px" src="https://img.shields.io/github/forks/kbventures/mtrade-frontend?color=6ca4cc" alt="Forks"/>
+<a href="https://github.com/kbventures/mtrade-backend/network/members">
+  <img height="28px" src="https://img.shields.io/github/forks/kbventures/mtrade-backend?color=6ca4cc" alt="Forks"/>
 </a>
 <a href="https://github.com/kbventures/mtrade-frontend/contributors">
-  <img height="28px" src="https://img.shields.io/github/contributors/kbventures/mtrade-frontend?color=88bc10&logo=github&logoColor=white" alt="Contributors"/>
+  <img height="28px" src="https://img.shields.io/github/contributors/kbventures/mtrade-backend?color=88bc10&logo=github&logoColor=white" alt="Contributors"/>
 </a>
 <a href="https://github.com/kbventures/mtrade-frontend/issues">
-  <img height="28px" src="https://img.shields.io/github/issues/kbventures/mtrade-frontend" alt="Issues"/>
+  <img height="28px" src="https://img.shields.io/github/issues/kbventures/mtrade-backend" alt="Issues"/>
 </a>
 </div>
 
-  <h3 align="center">mTrade Front End</h3>
+  <h3 align="center">mTrade Back End</h3>
 
   <p align="center">
     Mindful Analysis Of Your Trades!
