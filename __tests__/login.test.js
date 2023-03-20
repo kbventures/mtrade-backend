@@ -22,8 +22,6 @@ describe('USER Routes /api/user', () => {
         const testEmail = `${Math.floor(1000 + Math.random() * 9000)}@hotmail.com`;
 
         it('POST /api/user/signup should return 200 OK', async () => {
-                // eslint-disable-next-line no-console
-                console.log(testEmail);
                 const response = await request(app)
                         .post('/api/user/signup')
                         .send({ email: testEmail, password: 'Fuckthis22!!!' });
