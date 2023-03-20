@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const tradesRoutes = require('./routes/trades');
 const userRoutes = require('./routes/user');
 const binanceRoutes = require('./routes/binance');
+
 // express app
 const app = express();
 
@@ -50,21 +51,6 @@ app.use('/api/binance', binanceRoutes);
 app.get('/api', (req, res) => {
         res.send('Hello World!');
 });
-
-// connect to db
-// mongoose.set('strictQuery', false);
-// mongoose.connect(process.env.MONGO_URI)
-//         .then(() => {
-//                 // listen for requestsSome
-//                 app.listen(process.env.PORT || 4000, () => {
-//                         // eslint-disable-next-line no-console
-//                         console.log('Connected to db & listening on port', process.env.PORT || 4000);
-//                 });
-//         })
-//         .catch((error) => {
-//                 /* eslint no-console: ["error", { allow: ["warn", "error"] }] */
-//                 console.error(error);
-//         });
 
 app.get('/', (req, res) => res.status(200).send('hello from server'));
 
