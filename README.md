@@ -110,6 +110,7 @@ To get a local copy up and run follow these simple example steps.
 - Node.js: [Download](https://nodejs.org/en/)
 - Git: [Download](https://git-scm.com/)
 - [MongoDB Atlas](https://www.mongodb.com/atlas/database): MongoDB Account & Secret Key
+- [Binance](https://www.binance.com/en/support/faq/how-to-create-api-360002502072): Binance Account & Secret API Key
 
 ### Installation
 
