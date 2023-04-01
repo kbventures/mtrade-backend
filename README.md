@@ -33,7 +33,7 @@
     <br />
     <a href="https://mtrade-frontend.vercel.app/" target="_blank">View Demo</a>
     ·
-    <a href="https://github.com/kbventures/mtrade-frontend/issues">Report Bug</a>
+    <a href="https://github.com/kbventures/mtrade-backend/issues">Report Bug</a>
     ·
     <a href="https://github.com/kbventures/mtrade-frontend/issues/new">Request Feature</a>
   </p>
