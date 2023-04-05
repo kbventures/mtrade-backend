@@ -176,7 +176,7 @@ See the [open issues](https://github.com/othneildrew/Best-README-Template/issues
 1. Clone the repository with this command if you don't have it:
 
    ```shell
-   git clone https://github.com/kbventures/ecommerce.git
+   git clone https://github.com/kbventures/mtrade-backend.git
    ```
 
 2. Run the following command to make sure you have the latest changes on the main branch
